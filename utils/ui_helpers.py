@@ -1,8 +1,11 @@
 """Shared UI components and styling for the Streamlit app."""
 
+import base64
 from pathlib import Path
 
 import streamlit as st
+
+from utils.i18n import t
 
 ASSETS_DIR = Path(__file__).resolve().parent.parent / "assets"
 THUMBS_DIR = ASSETS_DIR / "thumbs"
@@ -87,6 +90,61 @@ def inject_custom_css() -> None:
             color: #666;
             margin-top: -0.5rem;
         }
+        .cover-hero {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background-size: cover;
+            background-position: center center;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 6px 24px rgba(26, 92, 46, 0.18);
+        }
+        .cover-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                120deg,
+                rgba(26, 92, 46, 0.82) 0%,
+                rgba(15, 60, 30, 0.55) 45%,
+                rgba(0, 0, 0, 0.35) 100%
+            );
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem 2rem;
+        }
+        .cover-title {
+            color: #ffffff;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+            margin: 0;
+            line-height: 1.15;
+        }
+        .cover-subtitle {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-weight: 500;
+            margin: 0.55rem 0 0 0;
+            max-width: 520px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+        }
+        .cover-badge {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.35rem 0.9rem;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            color: #fff;
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -121,14 +179,38 @@ def metric_card(title: str, value: str, subtitle: str = "") -> None:
     )
 
 
-def show_hero_banner() -> None:
+def show_hero_banner(lang: str = "en") -> None:
+    """Professional cover photo with floating title overlay."""
     path = asset_path("hero_farm.png")
-    if path.exists():
-        show_asset_image("hero_farm.png")
+    if not path.exists():
         st.markdown(
-            '<p class="hero-caption">Smallholder tobacco fields — Central Region, Malawi</p>',
+            f"""
+            <div class="cover-hero" style="background: linear-gradient(135deg, #1a5c2e, #2ecc71);">
+                <div class="cover-overlay">
+                    <h1 class="cover-title">{t("cover_title", lang)}</h1>
+                    <p class="cover-subtitle">{t("cover_subtitle", lang)}</p>
+                </div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
+        return
+
+    mime = "jpeg" if path.suffix.lower() in (".jpg", ".jpeg") else "png"
+    encoded = base64.b64encode(path.read_bytes()).decode()
+
+    st.markdown(
+        f"""
+        <div class="cover-hero" style="background-image: url('data:image/{mime};base64,{encoded}');">
+            <div class="cover-overlay">
+                <h1 class="cover-title">{t("cover_title", lang)}</h1>
+                <p class="cover-subtitle">{t("cover_subtitle", lang)}</p>
+                <span class="cover-badge">Malawi · Fodya · Smart Farming</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def init_session_state() -> None:

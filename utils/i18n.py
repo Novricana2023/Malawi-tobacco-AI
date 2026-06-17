@@ -1,6 +1,11 @@
 """Bilingual labels for English and Chichewa."""
 
 LABELS = {
+    "cover_title": ("Mlimi Smart Assistance", "Mlimi Smart Assistance"),
+    "cover_subtitle": (
+        "Smart support for smallholder tobacco farmers in Malawi",
+        "Thandizo lanzeru kwa alimi aang'ono a fodya ku Malawi",
+    ),
     "app_title": ("Tobacco Farmer Assist Malawi", "Thandizo la Alimi a Fodya – Malawi"),
     "welcome": ("Welcome, Farmer!", "Moni, Mlimi!"),
     "farm_status": ("Today's Farm Status", "Mkhalidwe wa Munda Lero"),

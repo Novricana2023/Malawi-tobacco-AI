@@ -43,9 +43,8 @@ with st.sidebar:
 
 lang = st.session_state.lang
 
-show_hero_banner()
+show_hero_banner(lang)
 
-st.markdown(f'<p class="main-header">{t("app_title", lang)}</p>', unsafe_allow_html=True)
 st.markdown(
     f'<p class="sub-header">{t("welcome", lang)} &nbsp;|&nbsp; {t("welcome", "ny" if lang == "en" else "en")}</p>',
     unsafe_allow_html=True,
