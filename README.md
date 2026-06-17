@@ -1,31 +1,46 @@
-# Malawi Tobacco AI — Farmer Assist
+# Mlimi Smart Assistant · Malawi Tobacco AI
 
-**Empowering smallholder tobacco farmers in Malawi with early disease detection, soil guidance, weather alerts, and bilingual farming support — right from a phone.**
+> **Thandizo lanzeru kwa alimi aang'ono a fodya ku Malawi — m'Chingerezi ndi Chichewa.**
 
-## Impact
+Every season, smallholder tobacco farmers in Malawi lose yield to late disease detection, poor soil choices, and bad weather timing — often without easy access to extension workers. **Mlimi Smart Assistant** puts practical farming support directly in farmers' hands through a **bilingual (English & Chichewa)** app with disease checking, soil rating, weather alerts, and chat guidance. It helps smallholders **act faster, protect their crop, and make better harvest and market decisions** from the field — on a shared phone, in the language they speak.
 
-| Challenge | How this app helps |
-|-----------|-------------------|
-| **Crop loss from late disease detection** | Farmers check leaf symptoms or upload photos and get simple next-step advice before losses spread |
-| **Poor soil & fertilizer decisions** | Soil type, moisture, and pH inputs return clear ratings and practical fertilizer tips |
-| **Weather-related harvest losses** | Rain, heat, and drying warnings help farmers avoid curing tobacco on bad days |
-| **Low digital literacy & language barriers** | Large buttons, simple layout, and **English + Chichewa** on key screens including home-page chat |
-| **Limited extension worker access** | 24/7 advisory chat and field tools reach remote smallholders on shared phones |
-| **Uncertain market timing** | Price trends and sell/hold guidance support better harvest and sales decisions |
+---
 
-**Built for real Malawian smallholders** — not commercial estates. Works offline with sample data; OpenAI optional for smarter chat.
+## Impact for local farmers
 
-## Features
+| Vuto / Challenge | Thandizo / How we help |
+|------------------|------------------------|
+| **Matenda a masamba amapezeka kase** | Onani zizindikilo kapena ikani chithunzi — landirani upangiri wochita nthawi yomweyo |
+| **Crop loss from late disease detection** | Check symptoms or upload a leaf photo — get simple next steps before disease spreads |
+| **Dothi ndi feteleza silizindikika** | Onani ngati dothi ndi labwino, ndipo landirani upangiri wa feteleza m'Chichewa kapena Chingerezi |
+| **Poor soil & fertilizer decisions** | Rate your soil and receive clear fertilizer advice in plain language |
+| **Mvula ndi nyengo imawononga fodya** | Chenjezo la mvula ndi kutentha — dziwani tsiku loyenera kugwira ntchito m'munda |
+| **Weather-related harvest losses** | Rain and heat warnings — know when not to dry tobacco |
+| **Kufikira kwa othandizira kumakhala kochepa** | Kukambirana ndi chat 24/7 pa foni — popanda kuyenda ku ofesi |
+| **Limited extension worker access** | 24/7 chat and tools on a phone — no travel to an office needed |
+| **Mitengo ya msika sizimveka bwino** | Onani mitengo ndi upangiri wa kugulitsa kapena kudikira |
+| **Uncertain market timing** | See price trends and get sell-or-hold guidance |
 
-- **Home Dashboard + Farmer Chat** — bilingual companion on the home page
-- **My Tobacco Field** — field size, crop stage, yield estimate
-- **Leaf Disease Checker** — photo upload or symptoms + sample leaf images
-- **Soil Check** — soil type, pH, moisture → rating & fertilizer advice
-- **Weather & Farming Advice** — practical daily field guidance
-- **Market Price Guide** — price chart and sell/hold advice
-- **Upload** — leaf images and farm records (optional)
+**Zopangidwa kwa alimi aang'ono a fodya ku Malawi** — osati mafamu akulu.  
+**Built for real Malawian smallholders** — not commercial estates.
 
-## Run locally
+---
+
+## What farmers get locally
+
+- **Mlimi Smart Assistant** — cover page and home chat in **English & Chichewa**
+- **Leaf Disease Checker** — tsamba lodwala / upload photo or pick symptoms
+- **Soil Check** — dothi, pH, madzi → rating + fertilizer tips
+- **Weather Advice** — chenjezo la mvula ndi kutentha
+- **My Tobacco Field** — yield estimate by field size and crop stage
+- **Market Price Guide** — mitengo ya msika ndi upangiri wogulitsa
+- **Farmer Chat** — funsani m'Chichewa kapena Chingerezi
+
+Works on low-end phones. Simple buttons. No complex dashboards.
+
+---
+
+## Run locally (for farmers & demos)
 
 ```bash
 pip install -r requirements.txt
@@ -34,15 +49,20 @@ streamlit run app.py
 
 Open **http://localhost:8501**
 
-## Deploy on Streamlit Cloud
+Or double-click **`run.bat`** on Windows.
+
+---
+
+## Deploy online
 
 1. Repo: [github.com/Novricana2023/Malawi-tobacco-AI](https://github.com/Novricana2023/Malawi-tobacco-AI)
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Main file: `app.py`
-4. Add secret: `OPENAI_API_KEY` (optional, for smart chat)
+2. [share.streamlit.io](https://share.streamlit.io) → main file: **`app.py`**
+3. Optional secret: `OPENAI_API_KEY` (for smarter chat)
 
-## Notes
+---
 
-- Disease results are **advisory only** — not a medical diagnosis
-- Farmer Chat works in **English and Chichewa**
-- Designed for low-resource farmers on mobile devices
+## Important note
+
+Disease results are **advisory only** — si chitsimikizo cha matenda. Always visit your local Agriculture Extension office for expert help.
+
+Chidziwitso ichi ndi chothandiza kokha — pitani ku Agriculture Extension office yanu kuti mupeze thandizo lothandiza kwa akatswiri.
