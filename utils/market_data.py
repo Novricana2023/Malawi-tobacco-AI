@@ -11,7 +11,6 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
 def _mock_prices_df() -> pd.DataFrame:
-    """Fallback mock prices if CSV missing or invalid."""
     return pd.DataFrame(
         {
             "Date": pd.date_range("2025-01-01", periods=12, freq="W"),
@@ -22,7 +21,6 @@ def _mock_prices_df() -> pd.DataFrame:
 
 
 def load_prices() -> pd.DataFrame:
-    """Load price history from CSV with safe fallback."""
     csv_path = DATA_DIR / "mock_prices.csv"
     try:
         if csv_path.exists():
@@ -37,8 +35,7 @@ def load_prices() -> pd.DataFrame:
     return _mock_prices_df()
 
 
-def get_market_advice(df: pd.DataFrame | None = None) -> dict[str, Any]:
-    """Simple trend-based selling advice."""
+def get_market_advice(df: pd.DataFrame | None = None, lang: str = "en") -> dict[str, Any]:
     df = df if df is not None else load_prices()
     prices = df["Price_MWK_per_kg"].astype(float)
     current = float(prices.iloc[-1])
@@ -47,16 +44,13 @@ def get_market_advice(df: pd.DataFrame | None = None) -> dict[str, Any]:
     trend = current - float(prices.iloc[-2]) if len(prices) > 1 else 0
 
     if current >= avg_all * 1.05 and trend > 0:
-        action = "Prices are high this week → consider selling"
-        action_ny = "Mitengo ikwera — ganizirani kugulitsa"
+        action = "Mitengo ikwera — ganizirani kugulitsa" if lang == "ny" else "Prices are high this week → consider selling"
         signal = "green"
     elif current <= avg_all * 0.92:
-        action = "Hold harvest if prices are low — wait for better week"
-        action_ny = "Dikirani kukolola ngati mitengo ili pansi"
+        action = "Dikirani kukolola ngati mitengo ili pansi" if lang == "ny" else "Hold harvest if prices are low — wait for better week"
         signal = "red"
     else:
-        action = "Prices are stable — sell if crop is ready and properly cured"
-        action_ny = "Mitengo ikukhala yofanana — gulitsani ngati fodya yakonzeka"
+        action = "Mitengo ikukhala yofanana — gulitsani ngati fodya yakonzeka" if lang == "ny" else "Prices are stable — sell if crop is ready and properly cured"
         signal = "yellow"
 
     return {
@@ -65,7 +59,6 @@ def get_market_advice(df: pd.DataFrame | None = None) -> dict[str, Any]:
         "avg_all_mwk": round(avg_all, 0),
         "weekly_change": round(trend, 0),
         "action": action,
-        "action_ny": action_ny,
         "signal": signal,
         "dataframe": df,
     }

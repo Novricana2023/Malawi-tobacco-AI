@@ -151,13 +151,12 @@ def inject_custom_css() -> None:
     )
 
 
-def risk_badge(level: str, label_en: str, label_ny: str = "") -> None:
+def risk_badge(level: str, label: str) -> None:
     dot = risk_dot(level)
-    ny_text = f"<br><small>{label_ny}</small>" if label_ny else ""
     st.markdown(
         f"""
         <div class="risk-card risk-{level}">
-            {dot}<strong>{label_en}</strong>{ny_text}
+            {dot}<strong>{label}</strong>
         </div>
         """,
         unsafe_allow_html=True,
@@ -198,6 +197,7 @@ def show_hero_banner(lang: str = "en") -> None:
 
     mime = "jpeg" if path.suffix.lower() in (".jpg", ".jpeg") else "png"
     encoded = base64.b64encode(path.read_bytes()).decode()
+    badge = t("cover_badge", lang)
 
     st.markdown(
         f"""
@@ -205,7 +205,7 @@ def show_hero_banner(lang: str = "en") -> None:
             <div class="cover-overlay">
                 <h1 class="cover-title">{t("cover_title", lang)}</h1>
                 <p class="cover-subtitle">{t("cover_subtitle", lang)}</p>
-                <span class="cover-badge">Malawi · Fodya · Smart Farming</span>
+                <span class="cover-badge">{badge}</span>
             </div>
         </div>
         """,

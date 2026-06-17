@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-STAGES = ["Nursery", "Transplanting", "Growing", "Ready to harvest"]
+from utils.i18n import STAGE_KEYS, stage_label, t
 
-# Typical smallholder yield in kg per hectare (air-cured tobacco, Malawi)
+STAGES = STAGE_KEYS
 BASE_YIELD_KG_HA = 1200
 
 STAGE_MULTIPLIERS = {
@@ -25,8 +25,8 @@ def estimate_yield(
     stage: str,
     soil_rating: str = "Medium",
     disease_risk: str = "green",
+    lang: str = "en",
 ) -> dict[str, Any]:
-    """Estimate harvest in kg with simple adjustments."""
     hectares = max(0.01, min(hectares, 50.0))
     stage_mult = STAGE_MULTIPLIERS.get(stage, 0.5)
     soil_mult = SOIL_BONUS.get(soil_rating, 1.0)
@@ -36,19 +36,19 @@ def estimate_yield(
     at_harvest = BASE_YIELD_KG_HA * hectares * soil_mult * risk_mult
 
     if stage == "Ready to harvest":
-        message = "Field is near harvest. Check leaf maturity before cutting."
+        message = t("yield_harvest", lang)
     elif stage == "Growing":
-        message = "Main growth phase — keep soil moisture steady and watch for disease."
+        message = t("yield_growing", lang)
     elif stage == "Transplanting":
-        message = "Young plants need water daily for first 2 weeks after transplant."
+        message = t("yield_transplant", lang)
     else:
-        message = "Nursery stage — protect seedlings from sun and pests."
+        message = t("yield_nursery", lang)
 
     return {
         "current_estimate_kg": round(projected, 1),
         "harvest_potential_kg": round(at_harvest, 1),
         "hectares": hectares,
-        "stage": stage,
+        "stage": stage_label(stage, lang),
         "message": message,
-        "bags_estimate": round(at_harvest / 50, 1),  # ~50 kg per bale/bag rough estimate
+        "bags_estimate": round(at_harvest / 50, 1),
     }
